@@ -68,7 +68,7 @@ RUN mkdir -p /opt/ltxmojo
 
 # Install the plugin via cpanminus
 WORKDIR /opt/ltxmojo
-RUN git clone https://github.com/dginev/LaTeXML-Plugin-ltxmojo . && cpanm --notest $LATEXML_VERSION $LATEXML_MWS_VERSION $MOJOLICIOUS_VERSION .
+RUN git clone https://github.com/dginev/LaTeXML-Plugin-ltxmojo . && cpanm $LATEXML_VERSION $LATEXML_MWS_VERSION $MOJOLICIOUS_VERSION .
 
 # All glory to the hypnotoad on port 8080
 EXPOSE 8080
