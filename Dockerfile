@@ -70,6 +70,10 @@ RUN mkdir -p /opt/ltxmojo
 WORKDIR /opt/ltxmojo
 RUN git clone https://github.com/dginev/LaTeXML-Plugin-ltxmojo . && cpanm $LATEXML_VERSION $LATEXML_MWS_VERSION $MOJOLICIOUS_VERSION .
 
+# just another build arg for install other plugins
+ARG OTHER_PLUGINS=""
+RUN [ "$OTHER_PLUGINS" == "" ] || cpanm $OTHER_PLUGINS .
+
 # All glory to the hypnotoad on port 8080
 EXPOSE 8080
 ENTRYPOINT [ "hypnotoad", "-f", "script/ltxmojo" ]
