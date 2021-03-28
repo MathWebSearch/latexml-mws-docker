@@ -17,7 +17,22 @@
 ##
 ## docker run -p 8080:8080 --rm latexml-plugin-ltxmojo
 
-FROM alpine:3.7
+# create a 'www-data' user on the standard user id!
+FROM alpine:3.13 as permission
+
+ENV USER=www-data
+ENV UID=82
+RUN adduser \
+    --disabled-password \
+    --gecos "" \
+    --home "/nonexistent" \
+    --shell "/sbin/nologin" \
+    --no-create-home \
+    --uid "${UID}" \
+    "${USER}"
+
+# install the actual system
+FROM alpine:3.13
 
 # Start by installing the system dependencies
 RUN apk add --no-cache \
@@ -74,8 +89,14 @@ RUN git clone https://github.com/dginev/LaTeXML-Plugin-ltxmojo . && cpanm --note
 ARG OTHER_PLUGINS=""
 RUN [ "$OTHER_PLUGINS" == "" ] || cpanm $OTHER_PLUGINS .
 
+# so that www-data can create a pidfile
+RUN chmod a+w /opt/ltxmojo/script/
+
+# add the user
+COPY --from=permission /etc/passwd /etc/passwd
+COPY --from=permission /etc/group /etc/group
 USER www-data:www-data
 
 # All glory to the hypnotoad on port 8080
 EXPOSE 8080
-ENTRYPOINT [ "hypnotoad", "-f", "script/ltxmojo" ]
+ENTRYPOINT [ "hypnotoad", "-f", "/opt/ltxmojo/script/ltxmojo"]
