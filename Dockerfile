@@ -76,6 +76,7 @@ RUN apk add --no-cache -U --repository http://dl-3.alpinelinux.org/alpine/edge/c
 # the latest ones
 ARG LATEXML_VERSION="LaTeXML"
 ARG LATEXML_MWS_VERSION="https://github.com/MathWebSearch/LaTeXML-Plugin-MathWebSearch.git"
+ARG LATEXML_ITEX_VERSION="https://github.com/MathWebSearch/LaTeXML-plugin-iTeX2MML.git"
 ARG MOJOLICIOUS_VERSION="Mojolicious"
 
 # Add all of the files
@@ -83,7 +84,7 @@ RUN mkdir -p /opt/ltxmojo
 
 # Install the plugin via cpanminus
 WORKDIR /opt/ltxmojo
-RUN git clone https://github.com/dginev/LaTeXML-Plugin-ltxmojo . && cpanm --notest $LATEXML_VERSION $LATEXML_MWS_VERSION $MOJOLICIOUS_VERSION .
+RUN git clone https://github.com/dginev/LaTeXML-Plugin-ltxmojo . && cpanm --notest $LATEXML_VERSION $LATEXML_MWS_VERSION $MOJOLICIOUS_VERSION $LATEXML_ITEX_VERSION .
 
 # just another build arg for install other plugins
 ARG OTHER_PLUGINS=""
