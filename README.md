@@ -2,7 +2,7 @@
 
 A Docker Image for the LaTeXML part of MathWebSearch. 
 
-It is published on GitHub Packages as the automated build [mathwebsearch/latexml](ghcr.io/mathwebsearch/latexml) and can be run as:
+It is published on GitHub Packages as the automated build [mathwebsearch/latexml](https://ghcr.io/mathwebsearch/latexml) and can be run as:
 
 ```
     docker run -p 8080:8080 ghcr.io/mathwebsearch/latexml
